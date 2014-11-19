@@ -32,6 +32,7 @@ import de.thwildau.amber.R;
 
 public class DemoActivity extends Activity implements OnClickListener {
 
+	// Test 
 	Button btnRegId;
 	EditText etRegId;
 	GoogleCloudMessaging gcm;

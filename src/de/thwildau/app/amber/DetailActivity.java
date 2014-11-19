@@ -1,10 +1,11 @@
 package de.thwildau.app.amber;
 
-import de.thwildau.amber.R;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import de.thwildau.amber.R;
 
 public class DetailActivity extends Activity {
 
