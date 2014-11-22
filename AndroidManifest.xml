@@ -54,6 +54,10 @@
             android:name="de.thwildau.app.amber.DemoActivity"
             android:label="@string/title_activity_demo" >
         </activity>
+        <activity
+            android:name="de.thwildau.app.amber.VehicleActivity"> 
+        </activity>
+        <activity android:name="de.thwildau.app.amber.EventsActivity"></activity>
     </application>
 
 </manifest>

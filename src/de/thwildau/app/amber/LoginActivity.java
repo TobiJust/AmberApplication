@@ -6,10 +6,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.Dialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -67,7 +65,15 @@ public class LoginActivity extends ActionBarActivity {
 		loginButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				loginWithRegID();
+				
+				//loginWithRegID();
+				
+				/*begin: skip login*/
+				
+				Intent skiplogin = new Intent(LoginActivity.this, VehicleActivity.class);
+				startActivity(skiplogin);
+				
+				/*end*/
 			}
 		});
 		registerButton.setOnClickListener(new OnClickListener() {			

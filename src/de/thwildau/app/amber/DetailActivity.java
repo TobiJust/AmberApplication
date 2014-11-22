@@ -2,9 +2,11 @@ package de.thwildau.app.amber;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import de.thwildau.amber.R;
 
 public class DetailActivity extends Activity {
@@ -13,6 +15,11 @@ public class DetailActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
+		
+		Intent intent = getIntent();
+		((TextView)(findViewById(R.id.eventdetail_textView1))).setText("Es wurde "+intent.getStringExtra("selected")+" gewählt.");
+		
+		
 	}
 
 	@Override
