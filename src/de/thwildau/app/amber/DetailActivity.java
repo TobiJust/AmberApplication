@@ -18,8 +18,6 @@ public class DetailActivity extends Activity {
 		
 		Intent intent = getIntent();
 		((TextView)(findViewById(R.id.eventdetail_textView1))).setText("Es wurde "+intent.getStringExtra("selected")+" gewählt.");
-		
-		
 	}
 
 	@Override

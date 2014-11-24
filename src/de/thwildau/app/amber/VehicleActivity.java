@@ -12,67 +12,52 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
+//import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import de.thwildau.amber.R;
+import de.thwildau.model.Vehicle;
 
 public class VehicleActivity<T> extends ActionBarActivity{
 
-	 @Override
-	    protected void onCreate(Bundle savedInstanceState) {
-	        super.onCreate(savedInstanceState);
-	        setContentView(R.layout.activity_vehicle);
-	        
-	        /*get vehicles from database*/
-	        
-        	/*create vehicle list*/
-	        
-	        List valueList = new ArrayList<String>();
-	        
-	        /*create ListItems*/
-	        
-	        for (int i=0; i<2; i++){
-	        	valueList.add("vehicle"+i);	
-	        }
-	        
-	        /*format list*/
-	        
-	        ListAdapter adapter = new ArrayAdapter<T>(getApplicationContext(), /*R.layout.vehicle_list_item*/ android.R.layout.simple_list_item_1, valueList);
-	        final ListView lv = (ListView)findViewById(R.id.listView_vehicleactivity);
-	        
-	        lv.setAdapter(adapter);
-	        lv.setBackgroundColor(Color.BLACK);
-	        lv.setDivider(new ColorDrawable(Color.parseColor("#ffcc33")));
-	        lv.setDividerHeight(5);
-	        
-	        /*clicklistener of list*/
-	        
-	        lv.setOnItemClickListener(new OnItemClickListener() {
-			
-	        	@Override
-	        	public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-	        	
-	        		switch(position)
-	        		{
-	        			case 0:	Intent newActivity0 = new Intent(VehicleActivity.this, EventsActivity.class);
-	        				startActivity(newActivity0);
-	        				break;
-	        			case 1:	Intent newActivity1 = new Intent(VehicleActivity.this, EventsActivity.class);
-							startActivity(newActivity1);
-							break;
-	        		}
-	        		
-		        	/*
-		        		Intent intent = new Intent();
-		        		intent.setClassName(getPackageName(), getPackageName()+".MainActivity2");
-		        		//intent.putExtra("selected", lv.getAdapter().getItem(arg2).toString());
-		        		startActivity(intent);
-		        	 */
-	        		
-	        	}
-	        	
-	        });
-	        
-	 	}
+	ArrayList<Vehicle> vehiclelist = new ArrayList<Vehicle>();
+    ListAdapter boxAdapter;
+
+      /** Called when the activity is first created. */
+      public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_vehicle);
+
+        fillData();
+        boxAdapter = new ListAdapter(this, vehiclelist);
+
+        ListView lv = (ListView) findViewById(R.id.lvMain);
+        lv.setAdapter(boxAdapter);
+        
+        lv.setBackgroundColor(Color.BLACK);
+        lv.setDivider(new ColorDrawable(Color.parseColor("#ffcc33")));
+        lv.setDividerHeight(5);
+        
+        lv.setOnItemClickListener(new OnItemClickListener() {
+        	
+        	@Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+        		
+        		Intent intent = new Intent(VehicleActivity.this, EventsActivity.class);
+        		startActivity(intent);
+        		
+            }
+        });
+      }
+
+      void fillData() {
+    	  
+    	  Intent intent = getIntent();
+    	  ArrayList<String> vehicleList = (ArrayList<String>) intent.getExtras().get("Vehiclelist");
+    	  
+        for (int i = 0; i < vehicleList.size(); i++) {
+         vehiclelist.add(new Vehicle(vehicleList.get(i),"0",0,false));
+        }
+      }
 	 
 }

@@ -29,11 +29,15 @@ import android.widget.EditText;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import de.thwildau.amber.R;
+import de.thwildau.app.network.NetworkClient;
+import de.thwildau.info.ClientMessage;
+import de.thwildau.info.ClientMessage.Ident;
 
 public class DemoActivity extends Activity implements OnClickListener {
 
 	// Test 
 	Button btnRegId;
+	Button btnRequest;
 	EditText etRegId;
 	GoogleCloudMessaging gcm;
 	String regid;
@@ -45,9 +49,11 @@ public class DemoActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_demo);
 
 		btnRegId = (Button) findViewById(R.id.btnGetRegId);
+		btnRequest = (Button) findViewById(R.id.btnRequest);
 		etRegId = (EditText) findViewById(R.id.etRegId);
 
 		btnRegId.setOnClickListener(this);
+		btnRequest.setOnClickListener(this);
 	}
 	public void getRegId(){
 		new AsyncTask<Void, Void, String>() {
@@ -77,5 +83,9 @@ public class DemoActivity extends Activity implements OnClickListener {
 	}
 	@Override
 	public void onClick(View v) {
-		getRegId();
+		System.out.println(v);
+		if(v.equals(btnRegId))
+			getRegId();
+		else
+			NetworkClient.getSession().write(new ClientMessage(Ident.EVENT_REQUEST, "01"));
 	} }

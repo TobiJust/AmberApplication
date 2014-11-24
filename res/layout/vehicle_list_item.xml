@@ -1,5 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <CheckBox
+        android:id="@+id/cbBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical" 
+        android:focusable="false">
+    </CheckBox>
+    
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:orientation="vertical"
+        android:layout_weight="1" >
+
+        <TextView
+            android:id="@+id/tvDescr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text=""
+            android:textSize="20sp" 
+            android:textColor="#ffcc33"
+            android:textStyle="bold">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="" 
+            android:textColor="#ffcc33">
+        </TextView>
+    </LinearLayout>
+
+   <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher"
+        android:layout_gravity="right"
+        android:contentDescription="@string/app_name">
+    </ImageView>
+
+</LinearLayout>
+
+
+
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+ 	android:layout_width="match_parent"
+ 	android:layout_height="match_parent"
+ 	android:orientation="horizontal" >
+<TextView
+    android:id="@+id/vehiclelist_textView1"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:textColor="#ffcc33"
@@ -7,5 +70,11 @@
     android:paddingLeft="20dp"
     android:layout_marginTop="20dp"
     android:gravity="center_vertical">
-    
 </TextView>
+<CheckBox
+ 	android:id="@+id/vehiclelist_checkBox1"
+ 	android:layout_width="wrap_content"
+ 	android:layout_height="wrap_content"
+ 	android:text="" />
+</LinearLayout>
+-->

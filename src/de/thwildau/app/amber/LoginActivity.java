@@ -6,8 +6,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Dialog;
-import android.content.Intent;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -42,12 +45,16 @@ public class LoginActivity extends ActionBarActivity {
 	private Button registerButton;
 	private EditText loginUsername;
 	private EditText loginPass;
+	
+	private static Context context;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
 
+		context = this.getApplicationContext();
+		
 		loadProperties();
 
 		try {
@@ -65,15 +72,7 @@ public class LoginActivity extends ActionBarActivity {
 		loginButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
-				//loginWithRegID();
-				
-				/*begin: skip login*/
-				
-				Intent skiplogin = new Intent(LoginActivity.this, VehicleActivity.class);
-				startActivity(skiplogin);
-				
-				/*end*/
+				loginWithRegID();
 			}
 		});
 		registerButton.setOnClickListener(new OnClickListener() {			
@@ -190,4 +189,9 @@ public class LoginActivity extends ActionBarActivity {
 		}
 		return hashed;
 	}
+	
+	public static Context getContext(){
+		return context;
+	}
+	
 }
