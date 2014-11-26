@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import de.thwildau.amber.R;
+import de.thwildau.model.Event;
 
 public class DetailActivity extends Activity {
 
@@ -17,7 +18,10 @@ public class DetailActivity extends Activity {
 		setContentView(R.layout.activity_detail);
 		
 		Intent intent = getIntent();
-		((TextView)(findViewById(R.id.eventdetail_textView1))).setText("Es wurde "+intent.getStringExtra("selected")+" gewählt.");
+		((TextView)(findViewById(R.id.eventdetail_textView1))).setText(" "+((Event)intent.getExtras().get("Event")).getType()
+																		+"\n"+((Event)intent.getExtras().get("Event")).getTimeStamp()
+																		+"\n"+((Event)intent.getExtras().get("Event")).getLatitude()
+																		+"\n"+((Event)intent.getExtras().get("Event")).getLongitude());
 	}
 
 	@Override

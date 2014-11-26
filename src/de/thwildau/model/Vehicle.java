@@ -10,7 +10,7 @@ public class Vehicle implements Serializable{
 	public int image;
 	public boolean boxed;
     private static final long serialVersionUID = -1208507633758359464L;
-    private ArrayList<Event> eventList;
+    public ArrayList<Event> eventList;
 	
 	public Vehicle(){
 		eventList = new ArrayList<Event>();

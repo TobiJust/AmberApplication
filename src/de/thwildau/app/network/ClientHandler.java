@@ -37,7 +37,7 @@ public class ClientHandler extends IoHandlerAdapter {
 		case REGISTER:
 			System.out.println(msg.getContent());
 			break;
-		case LOGIN:            	
+		case LOGIN:
 			System.out.println(msg.getContent());
 			UserData userData = (UserData)msg.getContent();
 			System.out.println("LENGTH " + userData.getVehicles().size());
@@ -48,12 +48,10 @@ public class ClientHandler extends IoHandlerAdapter {
 						System.out.println(e.getLatitude());
 				}
 			}
-			
 			Intent intent = new Intent(LoginActivity.getContext(), VehicleActivity.class);
-			intent.putExtra("Vehiclelist", userData.getVehicleNames());
+			intent.putExtra("Vehiclelist", userData.getVehicles());
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			LoginActivity.getContext().startActivity(intent);
-
 			break;
 		case EVENT:
 			Event ev = (Event)msg.getContent();

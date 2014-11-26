@@ -16,13 +16,13 @@ import android.widget.TextView;
 import de.thwildau.amber.R;
 import de.thwildau.model.Vehicle;
 
-public class ListAdapter extends BaseAdapter{
+public class VehicleListAdapter extends BaseAdapter{
 
 	Context context;
 	LayoutInflater inflater;
 	ArrayList<Vehicle> vehiclelist;
 	
-	public ListAdapter(Context context, ArrayList<Vehicle> vehiclelist){
+	public VehicleListAdapter(Context context, ArrayList<Vehicle> vehiclelist){
 		this.context = context;
 		this.vehiclelist = vehiclelist;
 		this.inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -53,11 +53,11 @@ public class ListAdapter extends BaseAdapter{
 
         Vehicle vehicle = getVehicle(position);
      
-        ((TextView)view.findViewById(R.id.tvDescr)).setText(vehicle.vehicleName);
-        ((TextView)view.findViewById(R.id.tvPrice)).setText(vehicle.date);
-        ((ImageView)view.findViewById(R.id.ivImage)).setImageResource(vehicle.image);
+        ((TextView)view.findViewById(R.id.vehiclelist_textview1)).setText(vehicle.vehicleName);
+        ((TextView)view.findViewById(R.id.vehiclelist_textview2)).setText(vehicle.date);
+        ((ImageView)view.findViewById(R.id.vehiclelist_imageview)).setImageResource(vehicle.image);
         
-        CheckBox cb = (CheckBox) view.findViewById(R.id.cbBox);
+        CheckBox cb = (CheckBox) view.findViewById(R.id.vehiclelist_cbBox);
         
         cb.setBackgroundColor(Color.WHITE);
         
