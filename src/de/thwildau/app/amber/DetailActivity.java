@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import de.thwildau.amber.R;
 import de.thwildau.model.Event;
 
 public class DetailActivity extends Activity {

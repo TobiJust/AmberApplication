@@ -12,7 +12,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import de.thwildau.amber.R;
+import de.thwildau.app.amber.R;
 import de.thwildau.app.amber.DemoActivity;
 
 public class GcmIntentService extends IntentService {

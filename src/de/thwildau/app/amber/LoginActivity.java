@@ -6,11 +6,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,13 +20,12 @@ import android.widget.EditText;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import de.thwildau.amber.R;
 import de.thwildau.app.network.NetworkClient;
 import de.thwildau.info.ClientMessage;
 import de.thwildau.model.User;
 
 
-public class LoginActivity extends ActionBarActivity {
+public class LoginActivity extends ActionBarActivity implements OnClickListener{
 
 	private static final String FILE_NAME = "client.properties";
 	private final String PROJECT_NUMBER = "381372694375";
@@ -46,6 +42,9 @@ public class LoginActivity extends ActionBarActivity {
 	private EditText loginUsername;
 	private EditText loginPass;
 	
+	private Button btnSignIn;
+	private Button btnSignUp;
+
 	private static Context context;
 
 	@Override
@@ -54,7 +53,7 @@ public class LoginActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_start);
 
 		context = this.getApplicationContext();
-		
+
 		loadProperties();
 
 		try {
@@ -64,134 +63,155 @@ public class LoginActivity extends ActionBarActivity {
 			e.printStackTrace();
 		}
 
-		loginButton = (Button) findViewById(R.id.loginButton);
-		registerButton = (Button) findViewById(R.id.registerButton);
-		loginUsername = (EditText) findViewById(R.id.loginUsername);
-		loginPass = (EditText) findViewById(R.id.loginPass);
+		btnSignIn = (Button) findViewById(R.id.btnSingIn);
+		btnSignUp = (Button) findViewById(R.id.btnSignUp);
 
-		loginButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				loginWithRegID();
-			}
-		});
-		registerButton.setOnClickListener(new OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				showRegisterDialog();
-			}
-		});
+		btnSignIn.setOnClickListener(this);
+		btnSignUp.setOnClickListener(this);
 	}
 
-	public void loginWithRegID(){
-		new AsyncTask<Void, Void, String>() {
-			@Override
-			protected String doInBackground(Void... params) {
-				try {
-					if (gcm == null) {
-						gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
-					}
-					regid = gcm.register(PROJECT_NUMBER);
-					Log.i("GCM",  regid);
+	@Override
+	public void onClick(View v) {
+		Intent i = null;
+		switch(v.getId()){
+		case R.id.btnSingIn:
+			i = new Intent(this, SignInActivity.class);
+			break;
+		case R.id.btnSignUp:
+			i = new Intent(this, SignUpActivity.class);
+			break;
+		}
+		startActivity(i);
+	}
 
-				} catch (IOException ex) {
-					Log.e("GCM", "Error :" + ex.getMessage());
+	//		loginButton = (Button) findViewById(R.id.loginButton);
+	//		registerButton = (Button) findViewById(R.id.registerButton);
+	//		loginUsername = (EditText) findViewById(R.id.loginUsername);
+	//		loginPass = (EditText) findViewById(R.id.loginPass);
+	//
+	//		loginButton.setOnClickListener(new OnClickListener() {
+	//			@Override
+	//			public void onClick(View v) {
+	//				loginWithRegID();
+	//			}
+	//		});
+	//		registerButton.setOnClickListener(new OnClickListener() {			
+	//			@Override
+	//			public void onClick(View v) {
+	//				showRegisterDialog();
+	//			}
+	//		});
 
+
+public void loginWithRegID(){
+	new AsyncTask<Void, Void, String>() {
+		@Override
+		protected String doInBackground(Void... params) {
+			try {
+				if (gcm == null) {
+					gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
 				}
-				return regid;
-			}
+				regid = gcm.register(PROJECT_NUMBER);
+				Log.i("GCM",  regid);
 
-			@Override
-			protected void onPostExecute(String regid) {
-				User userLogin = new User(loginUsername.getText().toString(), passwordToHash(loginPass.getText().toString()));
-				userLogin.setRegistrationID(regid);
-				NetworkClient.getSession().write(new ClientMessage(ClientMessage.Ident.LOGIN, userLogin));
+			} catch (IOException ex) {
+				Log.e("GCM", "Error :" + ex.getMessage());
 
 			}
-		}.execute(null, null, null);
-	}
+			return regid;
+		}
 
-	private void showRegisterDialog(){
+		@Override
+		protected void onPostExecute(String regid) {
+			User userLogin = new User(loginUsername.getText().toString(), passwordToHash(loginPass.getText().toString()));
+			userLogin.setRegistrationID(regid);
+			NetworkClient.getSession().write(new ClientMessage(ClientMessage.Ident.LOGIN, userLogin));
 
-		// custom dialog
-		final Dialog dialog = new Dialog(this);
-		dialog.setContentView(R.layout.dialog_register);
-		dialog.setTitle("Register...");
+		}
+	}.execute(null, null, null);
+}
 
-		final EditText userName = (EditText) dialog.findViewById(R.id.nameField);
-		final EditText userPass = (EditText) dialog.findViewById(R.id.passField);
-		Button registerButton = (Button) dialog.findViewById(R.id.registerButton);
-		Button cancelButton = (Button) dialog.findViewById(R.id.cancelButton);
+//private void showRegisterDialog(){
+//
+//	// custom dialog
+//	final Dialog dialog = new Dialog(this);
+//	dialog.setContentView(R.layout.dialog_register);
+//	dialog.setTitle("Register...");
+//
+//	final EditText userName = (EditText) dialog.findViewById(R.id.nameField);
+//	final EditText userPass = (EditText) dialog.findViewById(R.id.passField);
+//	Button registerButton = (Button) dialog.findViewById(R.id.registerButton);
+//	Button cancelButton = (Button) dialog.findViewById(R.id.cancelButton);
+//
+//	registerButton.setOnClickListener(new OnClickListener() {
+//		@Override
+//		public void onClick(View v) {
+//			User userRegister = new User(userName.getText().toString(), passwordToHash(userPass.getText().toString()));
+//			NetworkClient.getSession().write(new ClientMessage(ClientMessage.Ident.REGISTER, userRegister));
+//		}
+//	});
+//
+//	// if button is clicked, close the custom dialog
+//	cancelButton.setOnClickListener(new OnClickListener() {
+//		@Override
+//		public void onClick(View v) {
+//			dialog.dismiss();
+//		}
+//	});
+//
+//	// show it
+//	dialog.show();
+//}
 
-		registerButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				User userRegister = new User(userName.getText().toString(), passwordToHash(userPass.getText().toString()));
-				NetworkClient.getSession().write(new ClientMessage(ClientMessage.Ident.REGISTER, userRegister));
-			}
-		});
+/**
+ * Load properties from file
+ */
+public void loadProperties(){
 
-		// if button is clicked, close the custom dialog
-		cancelButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-		});
+	properties = new Properties();
+	AssetManager assetManager = this.getAssets();
 
-		// show it
-		dialog.show();
-	}
+	InputStream is = null;
+	try {
+		is = assetManager.open(FILE_NAME);
+		properties.load(is);
+		// logger.log(Level.SEVERE, settings.toString());
+	} catch (IOException ex) {
 
-	/**
-	 * Load properties from file
-	 */
-	public void loadProperties(){
+		// default Settings setzen
+		properties.put(NetworkClient.CONNECTION_TIMEOUT, 5000);
+		properties.put(NetworkClient.HOST_NAME, "amber-project.no-ip.org");
+		properties.put(NetworkClient.PORT, 8080);
 
-		properties = new Properties();
-		AssetManager assetManager = this.getAssets();
-
-		InputStream is = null;
-		try {
-			is = assetManager.open(FILE_NAME);
-			properties.load(is);
-			// logger.log(Level.SEVERE, settings.toString());
-		} catch (IOException ex) {
-
-			// default Settings setzen
-			properties.put(NetworkClient.CONNECTION_TIMEOUT, 5000);
-			properties.put(NetworkClient.HOST_NAME, "amber-project.no-ip.org");
-			properties.put(NetworkClient.PORT, 8080);
-
-		} finally {
-			if (is != null) {
-				try {
-					is.close();
-				} catch (IOException ex) {
-					Log.e("Error", ex.toString());
-				}
+	} finally {
+		if (is != null) {
+			try {
+				is.close();
+			} catch (IOException ex) {
+				Log.e("Error", ex.toString());
 			}
 		}
 	}
-	private byte[] passwordToHash(String pass){
-		byte[] hashed = null;
-		try {
-			// Create MessageDigest instance for MD5
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			//Add password bytes to digest
-			md.update(pass.getBytes());
-			//Get the hash's bytes 
-			hashed = md.digest();            
-		} 
-		catch (NoSuchAlgorithmException e) 
-		{
-			e.printStackTrace();
-		}
-		return hashed;
+}
+private byte[] passwordToHash(String pass){
+	byte[] hashed = null;
+	try {
+		// Create MessageDigest instance for MD5
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		//Add password bytes to digest
+		md.update(pass.getBytes());
+		//Get the hash's bytes 
+		hashed = md.digest();            
+	} 
+	catch (NoSuchAlgorithmException e) 
+	{
+		e.printStackTrace();
 	}
-	
-	public static Context getContext(){
-		return context;
-	}
-	
+	return hashed;
+}
+
+public static Context getContext(){
+	return context;
+}
+
 }

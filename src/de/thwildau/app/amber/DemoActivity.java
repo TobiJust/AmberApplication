@@ -28,7 +28,6 @@ import android.widget.EditText;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import de.thwildau.amber.R;
 import de.thwildau.app.network.NetworkClient;
 import de.thwildau.info.ClientMessage;
 import de.thwildau.info.ClientMessage.Ident;

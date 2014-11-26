@@ -13,7 +13,6 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import de.thwildau.amber.R;
 import de.thwildau.model.Vehicle;
 
 public class VehicleListAdapter extends BaseAdapter{

@@ -1,7 +1,6 @@
 package de.thwildau.app.amber;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import de.thwildau.amber.R;
 import de.thwildau.model.Event;
 
 public class EventsActivity<T> extends ActionBarActivity {

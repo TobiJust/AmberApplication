@@ -3,17 +3,11 @@ package de.thwildau.app.amber;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-import de.thwildau.amber.R;
 import de.thwildau.model.Event;
 
 public class EventListAdapter extends BaseAdapter{
