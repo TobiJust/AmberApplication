@@ -9,19 +9,19 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
-    
-     <ImageView
-         android:id="@+id/imageView1"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_above="@+id/etUserName"
-         android:layout_centerHorizontal="true"
-         android:layout_marginTop="70dp"
-         android:minHeight="250dp"
-         android:minWidth="250dp"
-         android:paddingBottom="20dp"
-         android:paddingTop="40dp"
-         android:src="@drawable/user_reg" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/etUserName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:minHeight="250dp"
+        android:minWidth="250dp"
+        android:paddingBottom="20dp"
+        android:paddingTop="40dp"
+        android:src="@drawable/user_reg" />
 
     <Button
         android:id="@+id/btnSingIn"
@@ -39,21 +39,6 @@
         android:textSize="18sp" />
 
     <EditText
-        android:id="@+id/etPass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnSingIn"
-        android:layout_alignLeft="@+id/btnSingIn"
-        android:layout_alignRight="@+id/btnSingIn"
-        android:layout_marginBottom="35dp"
-        android:background="@drawable/edittext_bottom_bg"
-        android:ems="10"
-        android:hint="Password"
-        android:padding="10dp"
-        android:password="true"
-        android:textColorHint="#cccccc" />
-
-    <EditText
         android:id="@+id/etUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,16 +47,30 @@
         android:layout_alignRight="@+id/btnSingIn"
         android:layout_marginBottom="14dp"
         android:background="@drawable/edittext_top_bg"
-        android:ems="10"
         android:hint="Email"
+        android:imeOptions="actionNext"
         android:padding="10dp"
+        android:singleLine="true"
         android:textColorHint="#cccccc" >
-
     </EditText>
-    
 
+    <EditText
+        android:id="@+id/etPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnSingIn"
+        android:layout_alignLeft="@+id/btnSingIn"
+        android:layout_alignRight="@+id/btnSingIn"
+        android:layout_marginBottom="35dp"
+        android:background="@drawable/edittext_bottom_bg"
+        android:hint="Password"
+        android:padding="10dp"
+        android:password="true"
+        android:singleLine="true"
+        android:textColorHint="#cccccc" />
 
-   <!--  <Button
+    <!--
+         <Button
         android:id="@+id/btnCancel"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="253dp"
@@ -81,8 +80,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_default_bg1"
         android:minHeight="45dip"
-        android:text="Cancel" /> -->
-
-
+        android:text="Cancel" />
+    -->
 
 </RelativeLayout>

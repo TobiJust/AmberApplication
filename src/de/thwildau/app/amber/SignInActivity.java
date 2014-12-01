@@ -12,8 +12,11 @@ import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,33 +27,23 @@ import de.thwildau.app.network.NetworkClient;
 import de.thwildau.info.ClientMessage;
 import de.thwildau.model.User;
 
-public class SignInActivity extends Activity {
+public class SignInActivity extends Activity implements OnKeyListener {
 
 	private static final String FILE_NAME = "client.properties";
 	private final String PROJECT_NUMBER = "381372694375";
-
 	private static Properties properties;
-	private static NetworkClient nClient;	
-
+	private static NetworkClient nClient;
 	private GoogleCloudMessaging gcm;
 	private String regid;
-	private String registrationID;
-
 	private Button loginButton;
-//	private Button cancelButton;
-//	private Button registerButton;
 	private EditText loginUsername;
 	private EditText loginPass;
-	
 	private static Context context;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
-        
-        
-context = this.getApplicationContext();
-		
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_sign_in);
 		loadProperties();
 
 		try {
@@ -59,99 +52,72 @@ context = this.getApplicationContext();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		loginButton = (Button) findViewById(R.id.btnSingIn);
 		loginUsername = (EditText) findViewById(R.id.etUserName);
 		loginPass = (EditText) findViewById(R.id.etPass);
+		loginPass.setOnKeyListener(this);
 		loginButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
+				Toast.makeText(getApplicationContext(), "Loading...",
+						Toast.LENGTH_SHORT).show();
 				loginWithRegID();
 			}
 		});
-    }
-		
-//		   cancelButton = (Button) findViewById(R.id.btnCancel);
-//			cancelButton.setOnClickListener(new OnClickListener() {
-//			   	@Override
-//				public void onClick(View v) {
-//						Intent intent = new Intent(SignInActivity.this, LoginActivity.class);
-//		      			startActivity(intent);
-//					
-//					}
-//			});
-//			}
-//    
-    
- 
-    
-    
-	public void loginWithRegID(){
+
+	}
+
+	@Override
+	public boolean onKey(View view, int keyCode, KeyEvent event) {
+
+		if (event.getAction() == KeyEvent.ACTION_DOWN
+				&& keyCode == KeyEvent.KEYCODE_ENTER) {
+			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(loginPass.getWindowToken(), 0);
+
+			return true;
+		}
+		return false; // pass on to other listeners.
+
+	}
+
+	public void loginWithRegID() {
 		new AsyncTask<Void, Void, String>() {
 			@Override
 			protected String doInBackground(Void... params) {
 				try {
 					if (gcm == null) {
-						gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
+						gcm = GoogleCloudMessaging
+								.getInstance(getApplicationContext());
 					}
 					regid = gcm.register(PROJECT_NUMBER);
-					Log.i("GCM",  regid);
+					Log.i("GCM", regid);
 
 				} catch (IOException ex) {
 					Log.e("GCM", "Error :" + ex.getMessage());
-					
 				}
 				return regid;
 			}
 
 			@Override
 			protected void onPostExecute(String regid) {
-				Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_SHORT).show();
-								User userLogin = new User(loginUsername.getText().toString(), passwordToHash(loginPass.getText().toString()));
+
+				User userLogin = new User(loginUsername.getText().toString(),
+						passwordToHash(loginPass.getText().toString()));
 				userLogin.setRegistrationID(regid);
-				NetworkClient.getSession().write(new ClientMessage(ClientMessage.Ident.LOGIN, userLogin));
+				NetworkClient.getSession()
+						.write(new ClientMessage(ClientMessage.Ident.LOGIN,
+								userLogin));
 
 			}
 		}.execute(null, null, null);
 	}
 
-//	private void showRegisterDialog(){
-//
-//		// custom dialog
-//		final Dialog dialog = new Dialog(this);
-//		dialog.setContentView(R.layout.dialog_register);
-//		dialog.setTitle("Register...");
-//
-//		final EditText userName = (EditText) dialog.findViewById(R.id.nameField);
-//		final EditText userPass = (EditText) dialog.findViewById(R.id.passField);
-//		Button registerButton = (Button) dialog.findViewById(R.id.registerButton);
-//		Button cancelButton = (Button) dialog.findViewById(R.id.cancelButton);
-//
-//		registerButton.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				User userRegister = new User(userName.getText().toString(), passwordToHash(userPass.getText().toString()));
-//				NetworkClient.getSession().write(new ClientMessage(ClientMessage.Ident.REGISTER, userRegister));
-//			}
-//		});
-//
-//		// if button is clicked, close the custom dialog
-//		cancelButton.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				dialog.dismiss();
-//			}
-//		});
-//
-//		// show it
-//		dialog.show();
-//	}
-
 	/**
 	 * Load properties from file
 	 */
-	public void loadProperties(){
+	public void loadProperties() {
 
 		properties = new Properties();
 		AssetManager assetManager = this.getAssets();
@@ -178,25 +144,24 @@ context = this.getApplicationContext();
 			}
 		}
 	}
-	private byte[] passwordToHash(String pass){
+
+	private byte[] passwordToHash(String pass) {
 		byte[] hashed = null;
 		try {
 			// Create MessageDigest instance for MD5
 			MessageDigest md = MessageDigest.getInstance("MD5");
-			//Add password bytes to digest
+			// Add password bytes to digest
 			md.update(pass.getBytes());
-			//Get the hash's bytes 
-			hashed = md.digest();            
-		} 
-		catch (NoSuchAlgorithmException e) 
-		{
+			// Get the hash's bytes
+			hashed = md.digest();
+		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
 		return hashed;
 	}
-	
-	public static Context getContext(){
+
+	public static Context getContext() {
 		return context;
 	}
-	
+
 }

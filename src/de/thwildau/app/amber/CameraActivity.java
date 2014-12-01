@@ -55,10 +55,10 @@ public class CameraActivity extends Activity {
 //				intent.setAction(Intent.ACTION_GET_CONTENT);
 //				startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
 ///*open camera*/
-//				Uri outputFileUri = Uri.fromFile(newfile);
-//				Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); 
-//				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-//				startActivityForResult(cameraIntent, TAKE_PHOTO_CODE);
+				Uri outputFileUri = Uri.fromFile(newfile);
+				Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); 
+				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+				startActivityForResult(cameraIntent, TAKE_PHOTO_CODE);
 				
 				
 			}

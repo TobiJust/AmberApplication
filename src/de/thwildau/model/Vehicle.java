@@ -38,6 +38,13 @@ public class Vehicle implements Serializable{
     public void setBoxed(boolean boxed){
     	this.boxed = boxed;
     }
+
+////////////////////    
+    public void setEventList(ArrayList<Event> eventList){
+    	this.eventList = eventList;
+    }
+////////////////////////
+    
     
     public String getName(){
     	return this.vehicleName;

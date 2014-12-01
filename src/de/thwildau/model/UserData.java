@@ -13,6 +13,7 @@ public class UserData implements Serializable{
 	private static final long serialVersionUID = 465312928422935320L;
 
 	private ArrayList<Vehicle> vehicleList = new ArrayList<Vehicle>();	
+	//private int userID;
 	
 	public ArrayList<Vehicle> getVehicles(){
 		return this.vehicleList;
