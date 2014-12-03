@@ -3,9 +3,14 @@ package de.thwildau.app.network;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IoSession;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import de.thwildau.app.amber.LoginActivity;
+import de.thwildau.app.amber.SignInActivity;
+import de.thwildau.app.amber.SplashScreenActivity;
 import de.thwildau.app.amber.VehicleActivity;
 import de.thwildau.info.ClientMessage;
 import de.thwildau.model.Event;
@@ -37,9 +42,28 @@ public class ClientHandler extends IoHandlerAdapter {
 		case REGISTER:
 			System.out.println(msg.getContent());
 			break;
+		case LOGIN_CHECK:
+			UserData userData = (UserData) msg.getContent();
+			if(userData != null){
+				Intent intent1 = new Intent(SplashScreenActivity.getContext(), VehicleActivity.class);
+				intent1.putExtra("Vehiclelist", userData.getVehicles());
+				intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				SplashScreenActivity.getContext().startActivity(intent1);
+			}
+			else{
+				System.out.println("Not online");
+				System.out.println(LoginActivity.getContext());
+				Intent intent1 = new Intent(SplashScreenActivity.getContext(), LoginActivity.class);
+				intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				SplashScreenActivity.getContext().startActivity(intent1);
+			}
+			break;
 		case LOGIN:
 			System.out.println(msg.getContent());
-			UserData userData = (UserData)msg.getContent();
+			userData = (UserData)msg.getContent();
+			int userID = userData.getUserID();
+			SharedPreferences prefs = LoginActivity.getContext().getSharedPreferences("de.thwildau", Context.MODE_PRIVATE);
+			prefs.edit().putInt("userID", userID).commit();
 			System.out.println("LENGTH " + userData.getVehicles().size());
 			for(Vehicle v : userData.getVehicles()){
 				System.out.println(v);
@@ -48,10 +72,10 @@ public class ClientHandler extends IoHandlerAdapter {
 						System.out.println(e.getLatitude());
 				}
 			}
-			Intent intent = new Intent(LoginActivity.getContext(), VehicleActivity.class);
+			Intent intent = new Intent(SignInActivity.getContext(), VehicleActivity.class);
 			intent.putExtra("Vehiclelist", userData.getVehicles());
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			LoginActivity.getContext().startActivity(intent);
+			SignInActivity.getContext().startActivity(intent);
 			break;
 		case EVENT:
 			Event ev = (Event)msg.getContent();

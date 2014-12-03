@@ -147,19 +147,16 @@ public class VehicleActivity<T> extends ActionBarActivity {
 	@Override
 	public void onBackPressed() {
 		if (this.lastBackPressTime < System.currentTimeMillis() - 3000) {
-			toast = Toast.makeText(this, "Press back again to close this app",
+			toast = Toast.makeText(this, "Press back again to return to your Homescreen",
 					4000);
 			this.lastBackPressTime = System.currentTimeMillis();
 			toast.show();
 		} else if (this.lastBackPressTime < System.currentTimeMillis() + 3000) {
 			this.lastBackPressTime = System.currentTimeMillis();
-			Intent intent = new Intent(this, LoginActivity.class);
+			Intent intent = new Intent(Intent.ACTION_MAIN);
+			intent.addCategory(Intent.CATEGORY_HOME);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.putExtra("Exit me", true);
-			startActivity(intent);
-			finish();
-			System.exit(0);
-			super.onBackPressed();
+			startActivity(intent);			
 		}
 	}
 

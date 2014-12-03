@@ -6,54 +6,40 @@ import java.util.Properties;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import de.thwildau.app.network.NetworkClient;
+import de.thwildau.info.ClientMessage;
 
 public class SplashScreenActivity extends Activity {
 
 	// Splash screen timer
-	private static int SPLASH_TIME_OUT = 3000;
 	private static Properties properties;
 	private static NetworkClient nClient;
 	private static final String FILE_NAME = "client.properties";
-	Context context = this;
+	private static Context context;
+	//	Context context = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splashscreen);
-		new Handler().postDelayed(new Runnable() {
-
-			/*
-			 * Showing splash screen with a timer. This will be useful when you
-			 * want to show case your app logo / company
-			 */
-
-			@Override
-			public void run() {
-				// This method will be executed once the timer is over
-				// Start your app main activity
-				Intent i = new Intent(SplashScreenActivity.this,
-						LoginActivity.class);
-				startActivity(i);
-
-				// close this activity
-				finish();
-			}
-		}, SPLASH_TIME_OUT);
-
+		if (getIntent().getBooleanExtra("Exit me", false)) {
+			finish();
+		}
+		context = this.getApplicationContext();
 		loadProperties();
-
 		try {
 			nClient = new NetworkClient(properties);
 			(new Thread(nClient)).start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		while(NetworkClient.getSession() == null);
+		SharedPreferences prefs = this.getSharedPreferences("de.thwildau", Context.MODE_PRIVATE);
+		NetworkClient.getSession().write(new ClientMessage(ClientMessage.Ident.LOGIN_CHECK,prefs.getInt("userID", -1)));
 	}
 
 	public void loadProperties() {
@@ -81,5 +67,10 @@ public class SplashScreenActivity extends Activity {
 				}
 			}
 		}
+	}
+
+	public static Context getContext() {
+		// TODO Auto-generated method stub
+		return context;
 	}
 }

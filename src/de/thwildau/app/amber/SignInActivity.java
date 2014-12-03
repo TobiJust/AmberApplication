@@ -39,19 +39,21 @@ public class SignInActivity extends Activity implements OnKeyListener {
 	private EditText loginUsername;
 	private EditText loginPass;
 	private static Context context;
+	private Toast toast;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sign_in);
 		loadProperties();
+		context = this.getApplicationContext();
 
-		try {
-			nClient = new NetworkClient(properties);
-			(new Thread(nClient)).start();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			nClient = new NetworkClient(properties);
+//			(new Thread(nClient)).start();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		loginButton = (Button) findViewById(R.id.btnSingIn);
 		loginUsername = (EditText) findViewById(R.id.etUserName);
 		loginPass = (EditText) findViewById(R.id.etPass);
@@ -60,14 +62,11 @@ public class SignInActivity extends Activity implements OnKeyListener {
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "Loading...",
-						Toast.LENGTH_SHORT).show();
+
 				loginWithRegID();
 			}
 		});
-
 	}
-
 	@Override
 	public boolean onKey(View view, int keyCode, KeyEvent event) {
 
@@ -103,13 +102,31 @@ public class SignInActivity extends Activity implements OnKeyListener {
 			@Override
 			protected void onPostExecute(String regid) {
 
-				User userLogin = new User(loginUsername.getText().toString(),
-						passwordToHash(loginPass.getText().toString()));
-				userLogin.setRegistrationID(regid);
-				NetworkClient.getSession()
-						.write(new ClientMessage(ClientMessage.Ident.LOGIN,
-								userLogin));
+				// loginUsername = (EditText) findViewById(R.id.etUserName);
+				// loginPass = (EditText) findViewById(R.id.etPass);
+				if (loginUsername.getText().toString().trim().length() == 0) {
+					toast = Toast.makeText(context, "Username is missing!",
+							Toast.LENGTH_SHORT);
+					toast.show();
+				}
+				else if (loginPass.getText().toString().trim().length() == 0) {
+					toast = Toast.makeText(context, "Password is missing!",
+							Toast.LENGTH_SHORT);
+					toast.show();
+				}
+				
+				else {
+				Toast.makeText(SignInActivity.getContext(), "Loading...",
+				Toast.LENGTH_SHORT).show();
+				User userLogin = new User(loginUsername.getText()
+							.toString(), passwordToHash(loginPass.getText()
+							.toString()));
 
+					userLogin.setRegistrationID(regid);
+					NetworkClient.getSession().write(
+							new ClientMessage(ClientMessage.Ident.LOGIN,
+									userLogin));
+				}
 			}
 		}.execute(null, null, null);
 	}

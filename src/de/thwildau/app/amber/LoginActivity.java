@@ -1,14 +1,11 @@
 package de.thwildau.app.amber;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Properties;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -17,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -34,14 +32,13 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
 	private Button btnSignIn;
 	private Button btnSignUp;
 	private static Context context;
+	private Toast toast;
+	private long lastBackPressTime = 1000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (getIntent().getBooleanExtra("Exit me", false)) {
-			finish();
-		}
 		setContentView(R.layout.activity_start);
 		context = this.getApplicationContext();
 		btnSignIn = (Button) findViewById(R.id.btnSingIn);
@@ -89,14 +86,29 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
 						passwordToHash(loginPass.getText().toString()));
 				userLogin.setRegistrationID(regid);
 				NetworkClient.getSession()
-						.write(new ClientMessage(ClientMessage.Ident.LOGIN,
-								userLogin));
+				.write(new ClientMessage(ClientMessage.Ident.LOGIN,
+						userLogin));
 			}
 		}.execute(null, null, null);
 	}
 
+	public void onBackPressed() {
+		if (this.lastBackPressTime < System.currentTimeMillis() - 3000) {
+			toast = Toast.makeText(this, "Press back again to return to your Homescreen",
+					4000);
+			this.lastBackPressTime = System.currentTimeMillis();
+			toast.show();
+		} else if (this.lastBackPressTime < System.currentTimeMillis() + 3000) {
+			this.lastBackPressTime = System.currentTimeMillis();
+			Intent intent = new Intent(Intent.ACTION_MAIN);
+			intent.addCategory(Intent.CATEGORY_HOME);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);			
+		}
+	}
+
 	/**
-	 * Load properties from file
+	 * Hash 
 	 */
 	private byte[] passwordToHash(String pass) {
 		byte[] hashed = null;

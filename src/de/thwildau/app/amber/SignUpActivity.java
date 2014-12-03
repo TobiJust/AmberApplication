@@ -29,7 +29,7 @@ public class SignUpActivity extends Activity {
 	private Button registerButton;
 	private EditText loginUsername;
 	private EditText loginPass;
-
+	private Toast toast;
 	private static Context context;
 
 	@Override
@@ -40,12 +40,12 @@ public class SignUpActivity extends Activity {
 		context = this.getApplicationContext();
 		loadProperties();
 
-		try {
-			nClient = new NetworkClient(properties);
-			(new Thread(nClient)).start();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			nClient = new NetworkClient(properties);
+//			(new Thread(nClient)).start();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		registerButton = (Button) findViewById(R.id.btnSingIn);
 		loginUsername = (EditText) findViewById(R.id.etUserName);
 		loginPass = (EditText) findViewById(R.id.etPass);
@@ -54,6 +54,19 @@ public class SignUpActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				
+				if (loginUsername.getText().toString().trim().length() == 0) {
+					toast = Toast.makeText(context, "Username is missing!",
+							Toast.LENGTH_SHORT);
+					toast.show();
+				}
+				else if (loginPass.getText().toString().trim().length() == 0) {
+					toast = Toast.makeText(context, "Password is missing!",
+							Toast.LENGTH_SHORT);
+					toast.show();
+				}
+				
+				else{
 				User userRegister = new User(
 						loginUsername.getText().toString(),
 						passwordToHash(loginPass.getText().toString()));
@@ -65,6 +78,7 @@ public class SignUpActivity extends Activity {
 				startActivity(intent);
 				Toast.makeText(getApplicationContext(), "You're registered",
 						Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}
