@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/eventdetail_textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:text="Bitte geben Sie die FahrzeugID ein:" />
+    
+    <EditText 
+        android:id="@+id/add_vehicle_dialog_vehiclename"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:scrollHorizontally="true"
+        android:autoText="false"
+        android:capitalize="none"
+        android:gravity="fill_horizontal"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+    
+    <Button
+        android:id="@+id/add_vehicle_dialog_ok_button"
+        style="@style/DefaultButtonText"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="4dp"
+        android:layout_marginBottom="35dp"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:background="@drawable/button_default_bg"
+        android:minHeight="20dip"
+        android:padding="12dp"
+        android:text="Ok"
+        android:textColor="#1c1c1c"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/add_vehicle_dialog_cancel_button"
+        style="@style/DefaultButtonText"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="4dp"
+        android:layout_marginBottom="35dp"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:background="@drawable/button_default_bg"
+        android:minHeight="20dip"
+        android:padding="12dp"
+        android:text="Abbrechen"
+        android:textColor="#1c1c1c"
+        android:textSize="18sp" >     
+    </Button>
+
+</LinearLayout>

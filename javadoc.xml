@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" additionalparam="C:/Android adt SDK/sdk/platforms/android-21/android.jar " author="true" classpath="libs/slf4j-api-1.7.7.jar;C:\Android adt SDK\sdk\extras\android\support\v7\appcompat\libs\android-support-v4.jar;C:\Android adt SDK\sdk\extras\google\google_play_services\libproject\google-play-services_lib\bin\google-play-services_lib.jar;C:\Android adt SDK\sdk\extras\google\google_play_services\libproject\google-play-services_lib\bin\classes;libs/slf4j-jdk14-1.7.7.jar;libs/mina-core-2.0.8.jar;C:\Android adt SDK\sdk\extras\android\support\v7\appcompat\libs\android-support-v7-appcompat.jar;libs/gcm.jar;C:\Android adt SDK\sdk\extras\google\google_play_services\libproject\google-play-services_lib\libs\google-play-services.jar;C:\Android adt SDK\sdk\extras\android\support\v7\appcompat\bin\android-support-v7-appcompat.jar" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="de.thwildau.model,de.thwildau.app.amber,de.thwildau.info,de.thwildau.util,com.google.android.gms,de.thwildau.app.gcm,android.support.v7.appcompat,de.thwildau.app.network" source="1.7" sourcepath="gen;src" splitindex="true" use="true" version="true">
+            <link href="file:/C:/Users/Kulla/Desktop/AmberApplication/doc/"/>
+        </javadoc>
+    </target>
+</project>

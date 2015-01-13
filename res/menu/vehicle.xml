@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:amber="http://schemas.android.com/apk/res-auto">
+     
+    <item
+        android:id="@+id/vehiclelist_abb_add_vehicle"
+        android:icon="@drawable/add_vehicle"
+        android:title=""
+        amber:showAsAction="ifRoom"/>
+
+</menu>

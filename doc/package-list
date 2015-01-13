@@ -1,0 +1,8 @@
+android.support.v7.appcompat
+com.google.android.gms
+de.thwildau.app.amber
+de.thwildau.app.gcm
+de.thwildau.app.network
+de.thwildau.info
+de.thwildau.model
+de.thwildau.util

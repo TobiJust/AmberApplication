@@ -1,7 +1,6 @@
 package de.thwildau.app.network;
 
 import java.net.InetSocketAddress;
-import java.util.Properties;
 
 import org.apache.mina.core.RuntimeIoException;
 import org.apache.mina.core.future.ConnectFuture;
@@ -11,38 +10,46 @@ import org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactor
 import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
+import de.thwildau.util.Constants;
+
 /**
  * Network client that connects to the server with the MINA libraries.
- * @author Tobias Just
+ * @author Just, Kulla
+ * @version 1.0
+ * @since 2015-01-12
+ * @see Runnable
  */
 public class NetworkClient implements Runnable{
 
-	public final static String CONNECTION_TIMEOUT = "ConnectionTimeout";
-	public final static String HOST_NAME = "Hostname";
-	public final static String PORT = "Port";
+	public final static String CONNECTION_TIMEOUT = Constants.CONNECTION_TIMEOUT;
+	public final static String HOST_NAME = Constants.HOST_NAME;
+	public final static String PORT = Constants.PORT;
 
-	private Properties properties = null;	
 	private static IoSession session;
 
-	public NetworkClient(Properties properties) {
-		this.properties = properties;
+	/**
+	 * Constructor
+	 */
+	public NetworkClient() {
+
 	}
 
+	/**
+	 * This method handles the socket connection.
+	 */
 	public void run() {
 
 		NioSocketConnector connector = new NioSocketConnector();
 
-		// Connection timeout 5000 aus Konfigurationsdatei laden
-		connector.setConnectTimeoutMillis(Integer.parseInt(properties.getProperty(CONNECTION_TIMEOUT)));
-		//		connector.setConnectTimeoutMillis(5000);
+		connector.setConnectTimeoutMillis(Integer.parseInt(CONNECTION_TIMEOUT));
 		connector.getFilterChain().addLast("codec",	new ProtocolCodecFilter(new ObjectSerializationCodecFactory()));
 		connector.getFilterChain().addLast("logger", new LoggingFilter());
 		connector.setHandler(new ClientHandler());
 
 		while(true) {
 			try {
-				String host = properties.getProperty(HOST_NAME);
-				int port = Integer.parseInt(properties.getProperty(PORT));
+				String host = HOST_NAME;
+				int port = Integer.parseInt(PORT);
 				System.out.println("Port " + port);
 				ConnectFuture future = connector.connect(new InetSocketAddress(host, port));
 				future.awaitUninterruptibly();
@@ -50,7 +57,7 @@ public class NetworkClient implements Runnable{
 				session = future.getSession();
 				break;
 			} catch (RuntimeIoException e) {
-				e.printStackTrace();
+				//				e.printStackTrace();
 				try {
 					Thread.sleep(5000);
 				} catch (InterruptedException ex) {
@@ -62,8 +69,25 @@ public class NetworkClient implements Runnable{
 		connector.dispose();
 	}
 
+	/**
+	 * This method gets the Io session.
+	 * @return IoSession Gets the Io session.
+	 */
 	public static IoSession getSession() {
+
 		return session;
+	}
+
+	/**
+	 * This method creates a new network client.
+	 */
+	public static void connect(){
+		try {
+			NetworkClient nClient = new NetworkClient();
+			(new Thread(nClient)).start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

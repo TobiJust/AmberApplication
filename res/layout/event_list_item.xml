@@ -3,14 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
-
-    <!--  <CheckBox
-        android:id="@+id/cbBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical" 
-        android:focusable="false">
-    </CheckBox>-->
     
     <LinearLayout
         android:id="@+id/eventlist_linearLayout1"
@@ -43,8 +35,10 @@
 
    <ImageView
         android:id="@+id/eventlist_imageview1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
         android:src="@drawable/ic_launcher"
         android:layout_gravity="right"
         android:contentDescription="@string/app_name">

@@ -4,22 +4,24 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
 
-    <CheckBox
-        android:id="@+id/vehiclelist_cbBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:focusable="false" >
-    </CheckBox>
-
+    <ImageView
+        android:id="@+id/vehiclelist_imageview"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="5dp"
+        android:contentDescription="@string/app_name"
+        android:paddingTop="8dp">
+    </ImageView>
+  
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_weight="1"
-        android:orientation="vertical" >
-
+        android:orientation="vertical">
+     
         <TextView
             android:id="@+id/vehiclelist_textview1"
             android:layout_width="wrap_content"
@@ -28,7 +30,7 @@
             android:text=""
             android:textColor="#ffcc33"
             android:textSize="20sp"
-            android:textStyle="bold" >
+            android:textStyle="bold">
         </TextView>
 
         <TextView
@@ -37,20 +39,34 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text=""
-            android:textColor="#ffcc33" >
+            android:textColor="#ffcc33">
         </TextView>
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/vehiclelist_imageview"
+        android:id="@+id/vehiclelist_alarm_off"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_gravity="right"
         android:layout_marginRight="5dp"
         android:contentDescription="@string/app_name"
         android:paddingTop="8dp"
-        android:src="@drawable/ic_launcher" >
-
+        android:visibility="visible"
+        android:onClick="toggleAlarm"
+        android:src="@drawable/vehicle_alarm_off" >
     </ImageView>
-
+    
+    <ImageView
+        android:id="@+id/vehiclelist_alarm_on"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="5dp"
+        android:contentDescription="@string/app_name"
+        android:paddingTop="8dp"
+        android:visibility="gone"
+        android:onClick="toggleAlarm"
+        android:src="@drawable/vehicle_alarm_on" >
+    </ImageView>
+    
 </LinearLayout>

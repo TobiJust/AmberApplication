@@ -22,53 +22,6 @@
         android:paddingTop="30dp"
         android:src="@drawable/amber_icon" />
 
- <!--  <EditText
-        android:id="@+id/loginUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="194dp"
-        android:background="#f5f5f5"
-        android:ems="10"
-        android:hint="Username"
-        android:inputType="textEmailAddress"
-        android:textColor="#999999" /> --> -->
-
- <!--    <Button
-        android:id="@+id/registerButton"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
-        android:text="Sign in"
-        android:textSize="10dp" />
-
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/loginPass"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="31dp"
-        android:background="#ffd700"
-        android:text="Login" /> -->
-
-<!--     <EditText
-        android:id="@+id/loginPass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:background="#f5f5f5"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:textColor="#999999" /> -->
-
         <Button
             android:id="@+id/btnSingIn"
             style="@style/DefaultButtonText"
@@ -98,7 +51,7 @@
             android:background="@drawable/button_default_bg1"
             android:minHeight="20dip"
             android:padding="12dp"
-            android:text="Register"
+            android:text="Registrierung"
             android:textColor="#1c1c1c"
             android:textSize="18sp" />
 
